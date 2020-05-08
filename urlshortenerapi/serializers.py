@@ -4,6 +4,11 @@ from rest_framework import serializers
 
 from .models import URL, URLVisit, CustomURL
 
+class CustomURLSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = CustomURL
+        fields = ('name', 'parent_url', 'created_date')
+
 class URLVisitSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = URLVisit
@@ -23,7 +28,7 @@ class URLSerializer(serializers.HyperlinkedModelSerializer):
         """
         This method actually functions as an "upsert" on URLs.  Ideally you would have a
         separate Update method but for the sake of time I've violated separation of concerns
-        by sticking bother operations here.
+        by sticking both operations here.
         """
         url_id = validated_data.get('original_name')
         matching_url = URL.objects.filter(original_name=url_id).first()

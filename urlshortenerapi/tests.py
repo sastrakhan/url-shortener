@@ -37,6 +37,9 @@ class URLModelTestCase(TestCase):
         self.assertEqual(visit_totals.get("total"), 2)
         self.assertEqual(visit_totals.get("grouped").get(date_time_key), 2)
 
+    # TODO: More robust testing on ensuring duplicates aren't being generated
+    # and all relationships are being properly created
+
 
 
 

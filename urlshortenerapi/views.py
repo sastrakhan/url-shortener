@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from django.http import HttpResponse, JsonResponse
-from .serializers import URLSerializer, URLVisitSerializer
+from .serializers import URLSerializer, URLVisitSerializer, CustomURLSerializer
 from .models import URL, URLVisit, CustomURL
 from django.forms.models import model_to_dict
 from django.db.models import Q
@@ -13,11 +13,14 @@ class URLVisitViewSet(viewsets.ModelViewSet):
     queryset = URLVisit.objects.all().order_by('date_visited')
     serializer_class = URLVisitSerializer
 
+class CustomURLViewSet(viewsets.ModelViewSet):
+    queryset = CustomURL.objects.all().order_by('created_date')
+    serializer_class = CustomURLSerializer
+
 # TODO: Refactor this silly aggregation to Pandas or other library to perform GroupBy
 def _process_visits(url_visits):
     result = {"total": 0, "grouped": {}}
 
-    # TODO: Refactor this silly aggregation to Pandas or other library to perform GroupBy
     for visit in url_visits:
         key = str(visit.date_visited)[0: 10]  # This is error prone and should use datetime or Arrow
         if key in result["grouped"]:

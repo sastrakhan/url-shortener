@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class URL(models.Model):
     original_name = models.CharField(max_length=100)
-    shortened_version = models.CharField(max_length=8)
+    shortened_version = models.CharField(max_length=8, blank=True)
     latest_custom_url = models.CharField(max_length=50, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -35,6 +35,10 @@ class CustomURL(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.name = slugify(self.name)
+        super(CustomURL, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['created_date']
