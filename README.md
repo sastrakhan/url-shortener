@@ -62,7 +62,6 @@ Set up your python virtual environment run the following commands in the root fo
 ```sh
 $ pip install django 
 $ pip install djangorestframework
-$ python manage.py makemigrations
 $ python manage.py migrate 
 $ python manage.py runserver
 ```
