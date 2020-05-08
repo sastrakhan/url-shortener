@@ -1,0 +1,12 @@
+
+
+{% if url %}
+    <h1>{% url["original_name"] %}</h1>
+    <ul>
+    {% for visit in url["visits"] %}
+        <li><a href="/polls/{{ visit.get('url') }}/">{{ visit.get("date_visited") }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Matching URL are available.</p>
+{% endif %}
